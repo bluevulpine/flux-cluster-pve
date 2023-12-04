@@ -1,0 +1,12 @@
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: vault-nfs
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: vault.funb.us
+  share: /mnt/home/apps/k3s-nfs
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions: ["hard", "noatime"]

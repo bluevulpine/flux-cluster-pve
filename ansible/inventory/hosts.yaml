@@ -1,0 +1,19 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k3s-c01:
+          ansible_user: ansible-deployer
+          ansible_host: 10.0.10.51
+        k3s-c02:
+          ansible_user: ansible-deployer
+          ansible_host: 10.0.10.52
+        k3s-c03:
+          ansible_user: ansible-deployer
+          ansible_host: 10.0.10.53
+    worker:
+      hosts:
+        k3s-w01:
+          ansible_user: ansible-deployer
+          ansible_host: 10.0.10.54
