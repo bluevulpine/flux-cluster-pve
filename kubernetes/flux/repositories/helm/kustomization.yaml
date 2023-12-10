@@ -8,9 +8,11 @@ resources:
   - ./cilium.yaml
   - ./coredns.yaml
   - ./csi-driver-nfs.yaml
+  - ./datadog.yaml
   - ./external-dns.yaml
   - ./grafana.yaml
   - ./hajimari.yaml
+  - ./halkeye.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
@@ -18,5 +20,7 @@ resources:
   - ./metrics-server.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
+  - ./rancher-latest.yaml
   - ./stakater.yaml
+  - ./traefik.yaml
   - ./weave-gitops.yaml
