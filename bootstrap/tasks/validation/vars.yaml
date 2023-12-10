@@ -1,8 +1,9 @@
 ---
-
 - name: Verify required bootstrap vars are set
   ansible.builtin.assert:
-    that: item | default('', true) | trim != ''
+    that:
+      - item in vars
+      - vars[item] != None
     success_msg: Required bootstrap var {{ item }} exists and is defined
     fail_msg: Required bootstrap var {{ item }} does not exists or is not defined
   loop:
@@ -23,6 +24,7 @@
     - bootstrap_ipv6_enabled
     - bootstrap_k8s_gateway_addr
     - bootstrap_kube_vip_addr
+    - bootstrap_local_path_provisioner_path
     - bootstrap_node_cidr
     - bootstrap_service_cidr
     - bootstrap_timezone
@@ -34,4 +36,4 @@
     fail_msg: Node name {{ item.name }} is not valid
   loop: "{{ bootstrap_nodes.master + bootstrap_nodes.worker | default([]) }}"
   loop_control:
-     label: "{{ item.name }}"
+    label: "{{ item.name }}"
