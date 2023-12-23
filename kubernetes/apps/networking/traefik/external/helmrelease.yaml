@@ -1,0 +1,94 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+  interval: 1m0s
+  values:
+    deployment:
+      kind: DaemonSet
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+    ingressRoute:
+      dashboard:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: traefik.local
+          kubernetes.io/ingress.class: traefik
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+        enabled: true
+        entryPoints:
+        - websecure
+        labels: {}
+        matchRule: Host(`traefik.local`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+        middlewares: []
+        tls:
+          domains:
+          - main: traefik.local
+          secretName: traefik-ingress-cert
+    metrics:
+      prometheus:
+        entryPoint: metrics
+    ports:
+      metrics:
+        expose: false
+        exposedPort: 9100
+        port: 9100
+        protocol: TCP
+      traefik:
+        expose: false
+        exposedPort: 9000
+        port: 9000
+        protocol: TCP
+      web:
+        expose: true
+        exposedPort: 80
+        port: 8000
+        protocol: TCP
+        redirectTo: websecure
+      websecure:
+        expose: true
+        exposedPort: 443
+        forwardedHeaders:
+          insecure: false
+        http3:
+          enabled: true
+        middlewares: []
+        port: 8443
+        protocol: TCP
+        tls:
+          certResolver: ""
+          domains: []
+          enabled: true
+          options: ""
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: false
+        allowEmptyServices: false
+        allowExternalNameServices: false
+        enabled: true
+        namespaces: []
+      kubernetesIngress:
+        allowEmptyServices: false
+        allowExternalNameServices: false
+        enabled: true
+        namespaces: []
+        publishedService:
+          enabled: true
+    service:
+      enabled: true
+      single: true
+      spec:
+        externalTrafficPolicy: Local
+      type: LoadBalancer
