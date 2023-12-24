@@ -13,7 +13,7 @@ metadata:
   name: policy-bgp-morpheus
 spec:
   virtualRouters:
-    - localASN: 65512
+    - localASN: 65511
       neighbors:
         - peerASN: 65510
           peerAddress: 10.25.52.1/32
