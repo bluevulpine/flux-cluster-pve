@@ -24,6 +24,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image.tag: v3.0.0-beta5
     fullnameOverride: traefik-internal
     deployment:
       kind: DaemonSet
@@ -59,7 +60,8 @@ spec:
         exposedPort: 80
         port: 8000
         protocol: TCP
-        redirectTo: websecure
+        redirectTo:
+          port: websecure
       websecure:
         expose: true
         exposedPort: 443
