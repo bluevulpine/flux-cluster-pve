@@ -68,7 +68,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: traefik-external
+        ingressClassName: traefik-external
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           hajimari.io/icon: video-input-antenna
@@ -83,3 +83,4 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: "{{ .Release.Name }}-tls"
