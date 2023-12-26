@@ -158,14 +158,16 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: internal
+      ingressClassName: traefik-internal
       annotations:
         hajimari.io/icon: simple-icons:grafana
+        cert-manager.io/cluster-issuer: letsencrypt-production
       hosts:
         - &host "grafana.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
+          secretName: "{{ .Release.Name }}-tls"
     persistence:
       enabled: true
       storageClassName: local-path

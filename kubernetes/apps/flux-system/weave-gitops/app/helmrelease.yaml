@@ -30,9 +30,10 @@ spec:
       username: admin
     ingress:
       enabled: true
-      className: internal
+      ingressClassName: traefik-internal
       annotations:
         hajimari.io/icon: sawtooth-wave
+        cert-manager.io/cluster-issuer: letsencrypt-production
       hosts:
         - host: &host "gitops.${SECRET_DOMAIN}"
           paths:
@@ -41,6 +42,7 @@ spec:
       tls:
         - hosts:
             - *host
+          secretName: "{{ .Release.Name }}-tls"
     networkPolicy:
       create: false
     metrics:

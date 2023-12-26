@@ -42,9 +42,10 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: traefik-internal
         annotations:
           hajimari.io/enable: "false"
+          cert-manager.io/cluster-issuer: letsencrypt-production
         hosts:
           - host: &host "hajimari.${SECRET_DOMAIN}"
             paths:
@@ -53,6 +54,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: "{{ .Release.Name }}-tls"
     podAnnotations:
       configmap.reloader.stakater.com/reload: hajimari-settings
     persistence:

@@ -93,16 +93,18 @@ data:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: traefik-internal
         annotations:
           hajimari.io/appName: Prometheus
           hajimari.io/icon: simple-icons:prometheus
+          cert-manager.io/cluster-issuer: letsencrypt-production
         pathType: Prefix
         hosts:
           - "prometheus.${SECRET_DOMAIN}"
         tls:
           - hosts:
               - "prometheus.${SECRET_DOMAIN}"
+            secretName: "{{ .Release.Name }}-tls"
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false

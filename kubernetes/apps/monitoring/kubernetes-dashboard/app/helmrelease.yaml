@@ -30,13 +30,15 @@ spec:
       - --disable-settings-authorizer
     ingress:
       enabled: true
-      className: internal
+      ingressClassName: traefik-internal
       annotations:
         hajimari.io/icon: mdi:kubernetes
+        cert-manager.io/cluster-issuer: letsencrypt-production
       hosts:
         - &host "kubernetes.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
+          secretName: "{{ .Release.Name }}-tls"
     metricsScraper:
       enabled: true
