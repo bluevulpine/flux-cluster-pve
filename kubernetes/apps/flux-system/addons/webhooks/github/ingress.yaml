@@ -23,4 +23,4 @@ spec:
   tls:
     - hosts:
         - *host
-      secretName: "{{ .Ingress.Name }}-tls"
+      secretName: "flux-webhook-tls"
