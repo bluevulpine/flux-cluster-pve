@@ -30,7 +30,7 @@ spec:
       username: admin
     ingress:
       enabled: true
-      className: traefik-internal
+      className: "traefik-internal"
       annotations:
         hajimari.io/icon: sawtooth-wave
         cert-manager.io/cluster-issuer: letsencrypt-production
