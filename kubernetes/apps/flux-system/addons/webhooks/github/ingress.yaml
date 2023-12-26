@@ -23,4 +23,4 @@ spec:
   tls:
     - hosts:
         - *host
-      secretName: "{{ .Release.Name }}-tls"
+      secretName: "{{ .Ingress.Name }}-tls"
