@@ -5,6 +5,7 @@ metadata:
   name: traefik-internal
   namespace: &namespace networking
 spec:
+  interval: 30m
   chart:
     spec:
       chart: traefik

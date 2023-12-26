@@ -5,6 +5,7 @@ metadata:
   name: traefik-external
   namespace: &namespace networking
 spec:
+  interval: 30m
   chart:
     spec:
       chart: traefik
@@ -60,7 +61,8 @@ spec:
         exposedPort: 80
         port: 8000
         protocol: TCP
-        redirectTo: websecure
+        redirectTo:
+          port: websecure
       websecure:
         expose: true
         exposedPort: 443
