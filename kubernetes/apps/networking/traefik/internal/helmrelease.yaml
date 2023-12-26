@@ -45,6 +45,7 @@ spec:
     metrics:
       prometheus:
         entryPoint: metrics
+        addRoutersLabels: true
     ports:
       metrics:
         expose: false
