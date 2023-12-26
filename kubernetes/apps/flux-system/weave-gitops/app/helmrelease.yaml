@@ -42,7 +42,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: "{{ .Release.Name }}-tls"
     networkPolicy:
       create: false
     metrics:
