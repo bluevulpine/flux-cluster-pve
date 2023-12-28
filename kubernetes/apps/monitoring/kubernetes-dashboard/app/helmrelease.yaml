@@ -36,11 +36,11 @@ spec:
         hosts:
           - &host "kubernetes.${SECRET_DOMAIN}"
         secretName: kubernetes-dashboard-tls
-metricsScraper:
-  enabled: true
-cert-manager:
-  enabled: false
-  installCrds: false
-nginx:
-  enabled: false
+    metricsScraper:
+      enabled: true
+    cert-manager:
+      enabled: false
+      installCrds: false
+    nginx:
+      enabled: false
 
