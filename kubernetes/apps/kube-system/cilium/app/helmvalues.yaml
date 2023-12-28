@@ -55,7 +55,7 @@ data:
           tls:
             - hosts:
                 - "hubble.${SECRET_DOMAIN}"
-              secretName: "{{ .Release.Name }}-tls"
+              secretName: "hubble-tls"
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"

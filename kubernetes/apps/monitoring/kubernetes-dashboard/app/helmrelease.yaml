@@ -39,6 +39,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: "{{ .Release.Name }}-tls"
+          secretName: kubernetes-dashboard-tls
     metricsScraper:
       enabled: true
