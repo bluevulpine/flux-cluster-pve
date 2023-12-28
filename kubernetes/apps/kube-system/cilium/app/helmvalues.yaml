@@ -46,7 +46,7 @@ data:
         rollOutPods: true
         ingress:
           enabled: true
-          ingressClassName: traefik-internal
+          className: traefik-internal
           annotations:
             hajimari.io/icon: simple-icons:cilium
             cert-manager.io/cluster-issuer: letsencrypt-production
