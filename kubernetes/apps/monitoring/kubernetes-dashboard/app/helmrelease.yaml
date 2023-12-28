@@ -38,6 +38,9 @@ spec:
         secretName: kubernetes-dashboard-tls
     metricsScraper:
       enabled: true
+
+    metrics-server:
+      enabled: false
     cert-manager:
       enabled: false
       installCrds: false
