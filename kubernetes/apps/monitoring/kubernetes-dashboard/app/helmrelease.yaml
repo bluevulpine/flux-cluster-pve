@@ -24,26 +24,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    extraArgs:
-      - --set=nginx.enabled=false
-      - --set=cert-manager.enabled=false
-      - --enable-insecure-login
-      - --enable-skip-login
-      - --disable-settings-authorizer
-    ingress:
-      enabled: true
-      ingressClassName: traefik-internal
-      issuer:
-        name: letsencrypt-production
-        scope: cluster
-      annotations:
-        hajimari.io/icon: mdi:kubernetes
-        cert-manager.io/cluster-issuer: letsencrypt-production
-      hosts:
-        - &host "kubernetes.${SECRET_DOMAIN}"
-      tls:
-        - hosts:
-            - *host
-          secretName: kubernetes-dashboard-tls
-    metricsScraper:
-      enabled: true
+    app:
+      ingress:
+        enabled: true
+        ingressClassName: traefik-internal
+        issuer:
+          name: letsencrypt-production
+          scope: cluster
+        annotations:
+          hajimari.io/icon: mdi:kubernetes
+        hosts:
+          - &host "kubernetes.${SECRET_DOMAIN}"
+        secretName: kubernetes-dashboard-tls
+metricsScraper:
+  enabled: true
+cert-manager:
+  enabled: false
+  installCrds: false
+nginx:
+  enabled: false
+
