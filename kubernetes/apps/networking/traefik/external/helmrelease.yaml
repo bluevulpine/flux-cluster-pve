@@ -38,7 +38,7 @@ spec:
         format: json
     ingressClass:
       enabled: true
-      isDefaultClass: true
+      isDefaultClass: false
     ingressRoute:
       dashboard:
         enabled: false

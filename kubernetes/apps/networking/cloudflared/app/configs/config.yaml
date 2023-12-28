@@ -4,29 +4,29 @@ originRequest:
 
 ingress:
   - hostname: "${SECRET_DOMAIN}"
-    service: https://traefik-external.networking.svc.cluster.local:443
+    service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
   - hostname: "*.${SECRET_DOMAIN}"
-    service: https://traefik-external.networking.svc.cluster.local:443
+    service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
 
   - hostname: "${SECRET_DOMAIN_BLOG}"
-    service: https://traefik-external.networking.svc.cluster.local:443
+    service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
   - hostname: "*.${SECRET_DOMAIN_BLOG}"
-    service: https://traefik-external.networking.svc.cluster.local:443
+    service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
 
   - hostname: "${SECRET_DOMAIN_MEDIA}"
-    service: https://traefik-external.networking.svc.cluster.local:443
+    service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
   - hostname: "*.${SECRET_DOMAIN_MEDIA}"
-    service: https://traefik-external.networking.svc.cluster.local:443
+    service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
 
