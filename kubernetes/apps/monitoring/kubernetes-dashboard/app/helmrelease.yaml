@@ -31,6 +31,9 @@ spec:
     ingress:
       enabled: true
       ingressClassName: traefik-internal
+      issuer:
+        name: letsencrypt-production
+        scope: cluster
       annotations:
         hajimari.io/icon: mdi:kubernetes
         cert-manager.io/cluster-issuer: letsencrypt-production
