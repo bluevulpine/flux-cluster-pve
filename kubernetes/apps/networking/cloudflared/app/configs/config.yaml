@@ -3,6 +3,9 @@ originRequest:
   http2Origin: true
 
 ingress:
+  - hostname: "hello.${SECRET_DOMAIN}"
+    service: hello_world
+
   - hostname: "${SECRET_DOMAIN}"
     service: https://traefik-external:443
     originRequest:
@@ -29,8 +32,5 @@ ingress:
     service: https://traefik-external:443
     originRequest:
       #originServerName: "external.${SECRET_DOMAIN}"
-
-  - hostname: "hello.${SECRET_DOMAIN}"
-    service: hello_world
 
   - service: http_status:404
