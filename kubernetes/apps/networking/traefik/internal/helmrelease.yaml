@@ -30,7 +30,7 @@ spec:
     deployment:
       kind: DaemonSet
       podLabels:
-        app.kubernetes.io/service: {{ .Release.Name }}
+        app.kubernetes.io/service: "{{ .Release.Name }}"
     logs:
       general:
         level: DEBUG
