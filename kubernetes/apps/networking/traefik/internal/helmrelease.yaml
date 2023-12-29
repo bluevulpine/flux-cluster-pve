@@ -46,6 +46,11 @@ spec:
       prometheus:
         entryPoint: metrics
         addRoutersLabels: true
+        serviceMonitor:
+          enabled: true
+          namespace: monitoring
+          interval: 10s
+          honorLabels: true
     ports:
       metrics:
         expose: false
