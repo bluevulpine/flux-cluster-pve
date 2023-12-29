@@ -1,10 +1,12 @@
 # Deploy a Kubernetes cluster backed by Flux
 
-A personalized-for-my-needs single Kubernetes ([k3s](https://k3s.io)) cluster with [Ansible](https://www.ansible.com) and using [Flux](https://toolkit.fluxcd.io) to manage its state.
+Welcome to my highly opinionated template for deploying a single Kubernetes ([k3s](https://k3s.io)) cluster with [Ansible](https://www.ansible.com) and using [Flux](https://toolkit.fluxcd.io) to manage its state.
 
 ## 👋 Introduction
 
-The goal of this project is to learn Flux and come up with a wife-approved "production-capable" homelab configuration that can be recreated with low effort in case of catastrophic system failure, such as has already happened with a single-node SBC running some docker containers.
+The goal of this project is to make it easy for people interested in learning Kubernetes to deploy a cluster at home and become familiar with the GitOps tool Flux.
+
+This template implements Flux in a way that promotes legibility and ease of use for those who are new (or relatively new) to the technology and GitOps in general.
 
 ## ✨ Features
 
