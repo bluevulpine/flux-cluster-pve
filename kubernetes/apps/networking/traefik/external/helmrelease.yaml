@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: traefik-external
+  name: &name traefik-external
   namespace: &namespace networking
 spec:
   interval: 30m
@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   values:
     image.tag: v3.0.0-beta5
-    fullnameOverride: traefik-external
+    fullnameOverride: *name
     deployment:
       kind: DaemonSet
     logs:
@@ -100,5 +100,5 @@ spec:
         externalTrafficPolicy: Local
       type: LoadBalancer
       labels:
-        app.kubernetes.io/service: {{ .Release.Name }}
+        app.kubernetes.io/service: *name
 
