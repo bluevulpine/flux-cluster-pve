@@ -13,6 +13,7 @@ data:
     kube-state-metrics:
       metricLabelsAllowlist:
         - "deployments=[*]"
+        - "daemonsets=[*]"
         - "persistentvolumeclaims=[*]"
         - "pods=[*]"
       prometheus:
