@@ -29,16 +29,19 @@ spec:
       darkTheme: espresso
       alwaysTargetBlank: true
       showGreeting: false
-      showAppGroups: false
-      showAppStatus: false
-      showBookmarkGroups: false
-      showGlobalBookmarks: false
+      showAppGroups: true
+      showAppStatus: true
+      showBookmarkGroups: true
+      showGlobalBookmarks: true
       showAppUrls: false
       defaultEnable: true
       namespaceSelector:
         matchNames:
           - default
           - monitoring
+          - networking
+          - media
+          - flux-system
     ingress:
       main:
         enabled: true
