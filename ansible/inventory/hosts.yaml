@@ -20,6 +20,6 @@ kubernetes:
         pi-k3s-w04:
           ansible_user: ansible-deployer
           ansible_host: 10.0.10.34
-        pi-k3s-w05:
+        pi-k3s-w06:
           ansible_user: ansible-deployer
-          ansible_host: 10.0.10.35
+          ansible_host: 10.0.10.36
