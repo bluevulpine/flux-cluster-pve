@@ -6,6 +6,8 @@ A personalized-for-my-needs single Kubernetes ([k3s](https://k3s.io)) cluster wi
 
 The goal of this project is to learn Flux and come up with a wife-approved "production-capable" homelab configuration that can be recreated with low effort in case of catastrophic system failure, such as has already happened with a single-node SBC running some docker containers.
 
+If you are new to Flux and GitOps in general it is important to understand that **all changes** you want made to your Kubernetes cluster should be **commited to your Git repository** which Flux will pick up and attempt to apply. You're still free to make _dirty_ edits using `kubectl` but keep in mind that Flux might revert them once its reconcilation loop happens.
+
 ## ✨ Features
 
 - Automated, reproducible, customizable setup through Ansible templates and playbooks
@@ -17,12 +19,11 @@ The goal of this project is to learn Flux and come up with a wife-approved "prod
 - Next-gen networking thanks to [Cilium](https://cilium.io/)
 - A [Renovate](https://www.mend.io/renovate)-ready repository with pull request diffs provided by [flux-local](https://github.com/allenporter/flux-local)
 - Integrated [GitHub Actions](https://github.com/features/actions)
-
-... and more!
+- ... and more!
 
 ## 📝 Pre-start checklist
 
-> [!CAUTION]
+> [!IMPORTANT]
 > Before we get started everything below must be taken into consideration, you must...
 
 - [ ] have some experience with the following: Git/SCM, containers, networking and scripting.
@@ -95,7 +96,7 @@ The goal of this project is to learn Flux and come up with a wife-approved "prod
 
 ### Debian for RasPi4
 
-> [!CAUTION]
+> [!IMPORTANT]
 > 1. It is recommended to have an 8GB RasPi model. Most important is to **boot from an external SSD/NVMe** rather than an SD card. This is [supported natively](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html), however if you have an early model you may need to [update the bootloader](https://www.tomshardware.com/how-to/boot-raspberry-pi-4-usb) first.
 > 2. Check the [power requirements](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#power-supply) if using a PoE Hat and a SSD/NVMe dongle.
 
@@ -128,7 +129,7 @@ The goal of this project is to learn Flux and come up with a wife-approved "prod
 
 Once you have installed Debian on your nodes, there are six stages to getting a Flux-managed cluster up and runnning.
 
-> [!CAUTION]
+> [!IMPORTANT]
 > For all stages below the commands **MUST** be ran on your personal workstation within your repository directory
 
 ### 🎉 Stage 1: Create a Git repository
@@ -393,7 +394,7 @@ The `external-dns` application created in the `networking` namespace will handle
 
 > [!TIP]
 > Below is how to configure a Pi-hole for split DNS. Other platforms should be similar.
-> 1. Apply this file on the server
+> 1. Apply this file on the Pihole server while substituting the variables
 > ```sh
 > # /etc/dnsmasq.d/99-k8s-gateway-forward.conf
 > server=/${bootstrap_cloudflare_domain}/${bootstrap_k8s_gateway_addr}
@@ -413,7 +414,10 @@ By default this template will deploy a wildcard certificate using the Let's Encr
 
 #### 🪝 Github Webhook
 
-By default Flux will periodically check your git repository for changes. In order to have Flux reconcile on `git push` you must configure Github to send `push` events.
+By default Flux will periodically check your git repository for changes. In order to have Flux reconcile on `git push` you must configure Github to send `push` events to Flux.
+
+> [!IMPORTANT]
+> This will only work after you have switched over certificates to the Let's Encrypt Production servers.
 
 1. Obtain the webhook path
 
@@ -488,7 +492,7 @@ Resolving problems that you have could take some tweaking of your YAML manifests
 ## 👉 Help
 
 - Make a post in this repository's Github [Discussions](https://github.com/onedr0p/flux-cluster-template/discussions).
-- Start a thread in the `support` or `flux-cluster-template` channel in the [Home Operations](https://discord.gg/home-operations) Discord server.
+- Start a thread in the `#support` or `#flux-cluster-template` channels in the [Home Operations](https://discord.gg/home-operations) Discord server.
 
 ## ❔ What's next
 
@@ -496,7 +500,7 @@ The cluster is your oyster (or something like that). Below are some optional con
 
 #### Ship it
 
-To browse or get ideas on applications people are running, community member [@whazor](https://github.com/whazor) created [this website](https://nanne.dev/k8s-at-home-search/) as a creative way to search Flux HelmReleases across Github.
+To browse or get ideas on applications people are running, community member [@whazor](https://github.com/whazor) created [Kubesearch](https://kubesearch.dev) as a creative way to search Flux HelmReleases across Github and Gitlab.
 
 #### Storage
 
@@ -512,7 +516,7 @@ By default this template only works on a public Github repository, it is advised
 The benefits of a public repository include:
 
 - Debugging or asking for help, you can provide a link to a resource you are having issues with.
-- Adding a topic to your repository of `k8s-at-home` to be included in the [k8s-at-home-search](https://nanne.dev/k8s-at-home-search/). This search helps people discover different configurations of Helm charts across others Flux based repositories.
+- Adding a topic to your repository of `kubesearch` to be included in the [Kubesearch](https://kubesearch.dev) results. This search helps people discover different configurations of Helm charts across others Flux based repositories.
 
 <details>
   <summary>Expand to read guide on adding Flux SSH authentication</summary>
