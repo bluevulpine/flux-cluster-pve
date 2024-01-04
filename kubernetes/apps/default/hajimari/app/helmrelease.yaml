@@ -38,9 +38,11 @@ spec:
       namespaceSelector:
         matchNames:
           - default
-          - monitoring
-          - networking
+          - observability
+          - network
           - media
+          - storage
+          - tools
           - flux-system
           - kube-system
     ingress:
