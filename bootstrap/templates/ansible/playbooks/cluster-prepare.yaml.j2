@@ -27,6 +27,14 @@
               smartmontools,socat,software-properties-common,unzip,util-linux
             install_recommends: false
 
+    - name: Pi Packages
+      when: ansible_kernel contains 'raspi'
+      block:
+        - name: Pi Packages | Install
+          ansible.builtin.apt:
+            name: linux-modules-extra-raspi
+            install_recommends: false
+
     - name: User Configuration
       block:
         - name: User Configuration | SSH keys
