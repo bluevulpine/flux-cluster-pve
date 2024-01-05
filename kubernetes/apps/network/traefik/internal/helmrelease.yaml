@@ -47,7 +47,6 @@ spec:
         addRoutersLabels: true
         serviceMonitor:
           enabled: true
-          namespace: observability
           interval: 10s
           honorLabels: true
     ports:
