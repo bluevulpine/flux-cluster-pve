@@ -24,5 +24,6 @@ resources:
   - ./prometheus-community.yaml
   - ./rancher-latest.yaml
   - ./stakater.yaml
+  - ./tailscale.yaml
   - ./traefik.yaml
   - ./weave-gitops.yaml
