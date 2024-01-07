@@ -84,12 +84,12 @@ spec:
                   name: main
                   port: s3
 
-    persistence:
-      dev:
-        storageClass: vault-nfs
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        retain: true
-        globalMounts:
-          - path: /data
+    #persistence:
+    #  dev:
+    #    storageClass: vault-nfs
+    #    enabled: true
+    #    accessMode: ReadWriteOnce
+    #    size: 5Gi
+    #    retain: true
+    #    globalMounts:
+    #      - path: /data
