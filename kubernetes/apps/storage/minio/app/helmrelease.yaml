@@ -87,6 +87,6 @@ spec:
     persistence:
       dev:
         storageClass: vault-nfs
-        type: persistentVolumeClaim
+        enabled: true
         globalMounts:
           - path: /data
