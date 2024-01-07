@@ -4,6 +4,8 @@ kind: Kustomization
 metadata:
   name: &app traefik-external
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: network
   commonMetadata:
@@ -26,6 +28,8 @@ kind: Kustomization
 metadata:
   name: &app traefik-internal
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: network
   commonMetadata:

@@ -15,6 +15,7 @@ resources:
   - ./descheduler.yaml
   - ./external-dns.yaml
   - ./grafana.yaml
+  - ./gpu-operator.yaml
   - ./hajimari.yaml
   - ./halkeye.yaml
   - ./ingress-nginx.yaml

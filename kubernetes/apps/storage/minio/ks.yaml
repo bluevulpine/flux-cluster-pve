@@ -3,17 +3,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname minio
+  name: &app minio
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: storage
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *appname
-  interval: 10m
+      app.kubernetes.io/name: *app
   path: "./kubernetes/apps/storage/minio/app"
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
   wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
