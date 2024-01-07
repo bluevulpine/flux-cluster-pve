@@ -86,7 +86,7 @@ spec:
 
     persistence:
       dev:
-        storageClassName: vault-nfs
+        storageClass: vault-nfs
         enabled: true
         accessMode: ReadWriteOnce
         size: 5Gi
