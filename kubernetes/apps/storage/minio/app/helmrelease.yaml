@@ -89,5 +89,7 @@ spec:
         storageClassName: vault-nfs
         enabled: true
         accessMode: ReadWriteOnce
+        size: 5Gi
+        retain: true
         globalMounts:
           - path: /data
