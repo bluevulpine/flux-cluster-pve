@@ -86,7 +86,7 @@ spec:
 
     persistence:
       dev:
-        storageClass: vault-nfs
+        storageClassName: vault-nfs
         enabled: true
         accessMode: ReadWriteOnce
         globalMounts:
