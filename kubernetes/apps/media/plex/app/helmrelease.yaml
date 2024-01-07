@@ -48,16 +48,16 @@ spec:
               requests:
                 cpu: 100m
                 #gpu.intel.com/i915: 1
-                #nvidia.com/gpu: 1
+                nvidia.com/gpu: 1
                 memory: 9248M
               limits:
                 #gpu.intel.com/i915: 1
                 nvidia.com/gpu: 1
                 memory: 9248M
               tolerations:
-              #- key: nvidia.com/gpu
-              #  operator: Exists
-              #  effect: NoSchedule
+              - key: nvidia.com/gpu
+                operator: Exists
+                effect: NoSchedule
 
     service:
       main:
