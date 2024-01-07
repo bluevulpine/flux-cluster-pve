@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: plex
+spec:
+  chart:
+    spec:
+      chart: app-template
+      version: 2.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  interval: 30m
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          #enableServiceLinks: false
+          #labels:
+          #  egress.home.arpa/internet: allow
+          #  ingress.home.arpa/lan: allow
+          #  ingress.home.arpa/traefik-external: allow
+          #  egress.home.arpa/kubedns: allow # FIXME: Remove when clusterNetworkPolicy is in place
+          #nodeSelector:
+          #  intel.feature.node.kubernetes.io/gpu: "true"
+          securityContext:
+            runAsUser: 1000 # ${APP_UID}
+            runAsGroup: 1000 # ${APP_GID}
+            fsGroup: 1000 # ${APP_GID}
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              # - 1000 # vault:docker-default
+              - 8675309 # vault:media
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.8.7639-fb6452ebf@sha256:637fe10cef736f249d96cb004c12f81646c81ca17ddce22374ea8782aa6646c2
+            resources:
+              requests:
+                cpu: 100m
+                #gpu.intel.com/i915: 1
+                #nvidia.com/gpu: 1
+                memory: 9248M
+              limits:
+                #gpu.intel.com/i915: 1
+                nvidia.com/gpu: 1
+                memory: 9248M
+              tolerations:
+              #- key: nvidia.com/gpu
+              #  operator: Exists
+              #  effect: NoSchedule
+
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: "172.16.8.4"
+        ports:
+          http:
+            port: 32400
+
+    ingress:
+      main:
+        enabled: true
+        className: "traefik-external"
+        hosts:
+          - host: "friday.${SECRET_DOMAIN_MEDIA}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - "${ .Release.Name }-tls"
+
+    persistence:
+      config:
+        type: nfs
+        server: "vault.${SECRET_DOMAIN_MEDIA}"
+        path: /mnt/home/apps/plex
+        advancedMounts:
+          main:
+            main:
+              - path: /config
+      nfs-nas-media:
+        type: nfs
+        server: "vault.${SECRET_DOMAIN_MEDIA}"
+        path: /mnt/blockbuster/media
+        advancedMounts:
+          main:
+            main:
+              - path: /data/nas-media
+      transcode:
+        type: emptyDir
+        advancedMounts:
+          main:
+            main:
+              - path: /transcode
