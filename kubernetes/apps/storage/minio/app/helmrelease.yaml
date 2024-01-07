@@ -88,6 +88,6 @@ spec:
       dev:
         storageClass: vault-nfs
         enabled: true
-        accessmode: ReadWriteOnce
+        accessMode: ReadWriteOnce
         globalMounts:
           - path: /data
