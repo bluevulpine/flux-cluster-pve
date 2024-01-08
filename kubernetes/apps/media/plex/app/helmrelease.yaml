@@ -31,9 +31,9 @@ spec:
           #nodeSelector:
           #  intel.feature.node.kubernetes.io/gpu: "true"
           securityContext:
-            runAsUser: 1000 # ${APP_UID}
-            runAsGroup: 1000 # ${APP_GID}
-            fsGroup: 1000 # ${APP_GID}
+            runAsUser: 1000 # APP_UID
+            runAsGroup: 1000 # APP_GID
+            fsGroup: 1000 # APP_GID
             fsGroupChangePolicy: "OnRootMismatch"
             supplementalGroups:
               # - 1000 # vault:docker-default
