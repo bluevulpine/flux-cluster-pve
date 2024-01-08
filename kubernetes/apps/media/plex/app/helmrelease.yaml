@@ -82,7 +82,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "${ .Release.Name }-tls"
+              - "${{ .Release.Name }}-tls"
 
     persistence:
       config:
