@@ -5,35 +5,50 @@ kind: HelmRelease
 metadata:
   name: plex
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
       version: 2.4.0
-      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  interval: 30m
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: local-path-provisioner
+      namespace: storage
   values:
+    deploymentStrategy:
+      type: Recreate
     controllers:
       main:
         annotations:
           reloader.stakater.com/auto: "true"
 
         pod:
-          #enableServiceLinks: false
-          #labels:
-          #  egress.home.arpa/internet: allow
-          #  ingress.home.arpa/lan: allow
-          #  ingress.home.arpa/traefik-external: allow
-          #  egress.home.arpa/kubedns: allow # FIXME: Remove when clusterNetworkPolicy is in place
-          #nodeSelector:
+          enableServiceLinks: false
+          labels:
+            egress.home.arpa/internet: allow
+            ingress.home.arpa/lan: allow
+            ingress.home.arpa/traefik-external: allow
+            egress.home.arpa/kubedns: allow # FIXME: Remove when clusterNetworkPolicy is in place
+          nodeSelector:
           #  intel.feature.node.kubernetes.io/gpu: "true"
+            nvidia.com/gpu.present: "true"
           securityContext:
-            runAsUser: 1000 # APP_UID
-            runAsGroup: 1000 # APP_GID
-            fsGroup: 1000 # APP_GID
+            runAsUser: 1000 # ${APP_UID}
+            runAsGroup: 1000 # ${APP_GID}
+            fsGroup: 1000 # ${APP_GID}
             fsGroupChangePolicy: "OnRootMismatch"
             supplementalGroups:
               # - 1000 # vault:docker-default
@@ -48,16 +63,16 @@ spec:
               requests:
                 cpu: 100m
                 #gpu.intel.com/i915: 1
-                #nvidia.com/gpu: 1
+                nvidia.com/gpu: 1
                 memory: 9248M
               limits:
                 #gpu.intel.com/i915: 1
-                #nvidia.com/gpu: 1
+                nvidia.com/gpu: 1
                 memory: 9248M
               tolerations:
-              #- key: nvidia.com/gpu
-              #  operator: Exists
-              #  effect: NoSchedule
+              - key: nvidia.com/gpu
+                operator: Exists
+                effect: NoSchedule
 
     service:
       main:
@@ -74,7 +89,7 @@ spec:
         enabled: true
         className: "traefik-external"
         hosts:
-          - host: "friday.${SECRET_DOMAIN}"
+          - host: &hostname "friday.${SECRET_DOMAIN_MEDIA}"
             paths:
               - path: /
                 service:
@@ -82,12 +97,14 @@ spec:
                   port: http
         tls:
           - hosts:
+              - *hostname
+            secretName:
               - "${{ .Release.Name }}-tls"
 
     persistence:
       config:
         type: nfs
-        server: "10.25.52.175"
+        server: "vault.${SECRET_DOMAIN_MEDIA}"
         path: /mnt/home/apps/plex
         advancedMounts:
           main:
@@ -95,7 +112,7 @@ spec:
               - path: /config
       nfs-nas-media:
         type: nfs
-        server: "10.25.52.175"
+        server: "vault.${SECRET_DOMAIN_MEDIA}"
         path: /mnt/blockbuster/media
         advancedMounts:
           main:
