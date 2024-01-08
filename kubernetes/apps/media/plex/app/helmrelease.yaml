@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: plex
 spec:
+  releaseName: plex
   interval: 30m
   chart:
     spec:
